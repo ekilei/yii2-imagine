@@ -1,0 +1,23 @@
+{
+  "name" : "ekilei/yii2-imagine",
+  "description" : "Image optimazer",
+  "type" : "yii2-extension",
+  "keywords" : ["yii2","image","resize","optimize","memory","extension"],
+  "license" : "MIT",
+  "authors" : [
+    {
+      "name" : "Ekilei",
+      "email" : "ekilei@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "yiisoft/yii2": "^2.0.4",
+    "yiisoft/yii2-bootstrap": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "ekilei\\imagine\\": ""
+    }
+  }
+}
