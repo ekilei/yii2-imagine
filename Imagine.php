@@ -8,6 +8,7 @@ class Imagine {
        $q = 100;
        list($w_src,$h_src) = getimagesize($sourcePath);
        $image_mime = image_type_to_mime_type(exif_imagetype($sourcePath));
+       $exif = exif_read_data($sourcePath);
        $w = $w_src;
        $h = $h_src;
 
@@ -27,6 +28,24 @@ class Imagine {
            return false;
        }
        // узнаем размеры
+       if(isset($exif['Orientation']) && !empty($exif['Orientation'])) {
+           $mem = round(($w_src*$h_src*4)/(1024*1024))*2+$minMemory;
+           ini_set('memory_limit',''.$mem.'M');
+
+           switch($exif['Orientation']) {
+               case 8:
+                   $image = imagerotate($image,90,0);
+                   list($w_src,$h_src) = [$h_src,$w_src];
+                   break;
+               case 3:
+                   $image = imagerotate($image,180,0);
+                   break;
+               case 6:
+                   $image = imagerotate($image,-90,0);
+                   list($w_src,$h_src) = [$h_src,$w_src];
+                   break;
+           }
+       }
 
        if($w_src>$w||$h_src>$h)
        {
