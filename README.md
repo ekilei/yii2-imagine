@@ -1,4 +1,4 @@
-# yii2-imgaine
+# yii2-imagine
 
 ###Использование
 Use
