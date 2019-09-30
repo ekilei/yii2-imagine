@@ -8,7 +8,12 @@ class Imagine {
        $q = 100;
        list($w_src,$h_src) = getimagesize($sourcePath);
        $image_mime = image_type_to_mime_type(exif_imagetype($sourcePath));
-       $exif = exif_read_data($sourcePath);
+       try {
+           $exif = @exif_read_data($sourcePath);
+       }
+       catch (Exception $exp) {
+           $exif = false;
+       }
        $w = $w_src;
        $h = $h_src;
 
