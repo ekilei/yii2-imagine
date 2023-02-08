@@ -1,5 +1,13 @@
 <?php
 namespace ekilei\imagine;
+/**
+ * $sourcePath - исходный путь к файлу
+ * $targetPath - целевой путь сохранения
+ * $options = ['w' => 400,'h' => 300,'q' => 65]
+ * $removeOriginal - метка удалить исходный файл
+ * $minMemory - минимальное выделение памяти чтобы функция в принице стартанула, далее идет выделение памяти взависимости
+ * от разрешения изображения
+*/
 
 class Imagine {
 
@@ -11,7 +19,7 @@ class Imagine {
        try {
            $exif = @exif_read_data($sourcePath);
        }
-       catch (Exception $exp) {
+       catch (\Exception $exp) {
            $exif = false;
        }
        $w = $w_src;
@@ -30,6 +38,7 @@ class Imagine {
            case "image/jpeg": $image = imagecreatefromjpeg($sourcePath); break;
            case "image/gif": $image = imagecreatefromgif($sourcePath); break;
            case "image/png": $image = imagecreatefrompng($sourcePath); break;
+           case "image/webp": $image = imagecreatefromwebp($sourcePath); break;
            return false;
        }
        // узнаем размеры
@@ -55,7 +64,7 @@ class Imagine {
        if($w_src>$w||$h_src>$h)
        {
            // картинка не по размеру
-           if($w_src > $h_src)
+           if($w_src >= $h_src)
            {
                // картинка горизонтальная
                $w_new = $w;
@@ -87,6 +96,7 @@ class Imagine {
            case "image/jpeg": imagejpeg($newpic,$targetPath,$q); break;
            case "image/gif": imagegif($newpic,$targetPath); break;
            case "image/png": imagepng($newpic,$targetPath); break;
+           case "image/webp": imagewebp($newpic,$targetPath); break;
        }
 
        imagedestroy($newpic);
